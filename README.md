@@ -1,10 +1,10 @@
 # Visualizing HealthKit State of Mind in visionOS
 
-Learn how to incorporate HealthKit State of Mind into your app and visualize the data in visionOS.
+Incorporate HealthKit State of Mind into your app and visualize the data in visionOS.
 
 ## Overview
 
-- Note: This sample code project is associated with WWDC24 session 10083: [Get started with HealthKit in visionOS](https://developer.apple.com/wwdc24/10083) and session 10109: [Explore well-being APIs in HealthKit](https://developer.apple.com/wwdc24/10109).
+- Note: This sample code project is associated with WWDC24 session 10083: [Get started with HealthKit in visionOS](https://developer.apple.com/wwdc24/10083) and session 10109: [Explore wellbeing APIs in HealthKit](https://developer.apple.com/wwdc24/10109).
 
 ## Configure the sample code project
 

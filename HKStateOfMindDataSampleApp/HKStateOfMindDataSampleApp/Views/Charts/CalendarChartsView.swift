@@ -14,12 +14,12 @@ import Charts
 struct CalendarChartsView: View {
     var healthStore: HKHealthStore { HealthStore.shared.healthStore }
     let calendarModels: [CalendarModel]
-    
-    @State private var dataProvider: CalendarChartStateOfMindDataProvider = .init(healthStore: HealthStore.shared.healthStore,
-                                                                                  selectedCalendars: [],
-                                                                                  dateInterval: .weeklyInterval)
+
+    @State private var dataProvider: CalendarStateOfMindDataProvider = .init(healthStore: HealthStore.shared.healthStore,
+                                                                             selectedCalendars: [],
+                                                                             dateInterval: .weeklyInterval)
     @State private var dateConfiguration: DateConfiguration = DateConfiguration()
-    
+
     /// Maps the core model to a view model for the chart.
     private var chartSeries: [ChartSeries] {
         return dataProvider.calendarStateOfMindData.map { calendarData in
@@ -28,12 +28,12 @@ struct CalendarChartsView: View {
                         dateConfiguration: dateConfiguration)
         }
     }
-    
+
     init(calendarModels: [CalendarModel]) {
         // Define the initial values for the view's state.
         self.calendarModels = calendarModels
     }
-    
+
     var body: some View {
         VStack {
             // The calendar selector.
@@ -44,7 +44,7 @@ struct CalendarChartsView: View {
             } else {
                 Text("Calendar Data Not Available")
             }
-            
+
             // The chart viewer.
             if dataProvider.selectedCalendars.isEmpty {
                 Spacer()
@@ -70,13 +70,13 @@ struct CalendarChartsView: View {
         .onAppear {
             self.dataProvider = .init(healthStore: HealthStore.shared.healthStore,
                                       selectedCalendars: Set(calendarModels),
-                                      dateInterval: dateConfiguration.chartingDateInterval)
+                                      dateInterval: dateConfiguration.queryDateInterval)
         }
     }
-    
+
     private struct NewChartViewerButton: View {
         @Environment(\.openWindow) private var openWindow
-        
+
         var body: some View {
             // Opens the chart viewer in a new window.
             Button("Open In New Window", systemImage: "plus.rectangle.on.rectangle") {
@@ -87,18 +87,18 @@ struct CalendarChartsView: View {
             .labelStyle(.iconOnly)
         }
     }
-    
+
     // MARK: - Models
-    
+
     /// A configuration of a particular lens into aggregating and visualization data over a date interval.
     struct DateConfiguration: Equatable {
         /// The date representing the latest date currently displaying.
-        var anchorDate: Date = Calendar.current.startOfDay(for: Date()) // Begin with today as the anchor.
+        var anchorDate: Date = Calendar.current.startOfDay(for: Date()) // Begin with midnight today as the anchor.
         /// The component to stride through when aggregating data.
         var aggregationCalendarComponent: Calendar.Component = .day
         /// The number of strides back in time from the anchor date.
         var aggregationBinCount: Int = 7
-        
+
         /// The date interval working backward from the anchor date by the number of bins.
         var chartingDateInterval: DateInterval {
             .init(start: Calendar.current.date(byAdding: aggregationCalendarComponent,
@@ -112,18 +112,18 @@ struct CalendarChartsView: View {
             .init(start: chartingDateInterval.start,
                   end: Calendar.current.date(byAdding: aggregationCalendarComponent, value: 1, to: anchorDate)!)
         }
-        
+
         /// The bins to use to group data into chart points.
         var dateBins: DateBins { DateBins(unit: aggregationCalendarComponent,
                                           range: .init(uncheckedBounds: (chartingDateInterval.start, chartingDateInterval.end))) }
-        
+
         /// Shifts the configuration back by one group of bins.
         mutating func decrement() {
             anchorDate = Calendar.current.date(byAdding: aggregationCalendarComponent,
                                                value: -aggregationBinCount,
                                                to: anchorDate)!
         }
-        
+
         /// Shifts the configuration forward by one group of bins.
         mutating func increment() {
             anchorDate = Calendar.current.date(byAdding: aggregationCalendarComponent,

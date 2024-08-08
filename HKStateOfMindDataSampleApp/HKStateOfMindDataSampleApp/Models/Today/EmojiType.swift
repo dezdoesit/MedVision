@@ -83,5 +83,16 @@ extension EmojiType {
     struct SaveDetails: Identifiable, Equatable {
         let id = UUID()
         var errorString: String
+        
+        init(saveError: Error) {
+            switch saveError {
+            case HKError.errorNotPermissibleForGuestUserMode:
+                // Drop data you generate in a Guest User session.
+                errorString = "Health data cannot be saved while Guest User is on."
+            default:
+                // Existing error handling.
+                errorString = "Your health data could not be saved: \(saveError.localizedDescription)"
+            }
+        }
     }
 }

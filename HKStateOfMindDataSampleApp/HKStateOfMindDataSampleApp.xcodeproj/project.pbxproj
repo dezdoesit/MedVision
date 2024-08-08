@@ -27,7 +27,7 @@
 		EB2304512BF55AEF0045AE01 /* InsightCalendarScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2304502BF55AEF0045AE01 /* InsightCalendarScoreView.swift */; };
 		EB2E3F122BFD6408004943BB /* InsightsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2E3F112BFD6408004943BB /* InsightsModels.swift */; };
 		EB2E3F152BFD6490004943BB /* InsightSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2E3F142BFD6490004943BB /* InsightSectionView.swift */; };
-		EB2E3F182BFE46D2004943BB /* InsightsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2E3F172BFE46D2004943BB /* InsightsDataSource.swift */; };
+		EB2E3F182BFE46D2004943BB /* InsightsDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2E3F172BFE46D2004943BB /* InsightsDataFetcher.swift */; };
 		EB3DFFA82BE3FC6C00AC3A04 /* InsightsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3DFFA72BE3FC6C00AC3A04 /* InsightsGridView.swift */; };
 		EB3DFFE02BE4122500AC3A04 /* InsightEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3DFFDF2BE4122500AC3A04 /* InsightEventView.swift */; };
 		EB89E2F22BE3FBAD00C69485 /* CalendarChartsView+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB89E2F12BE3FBAD00C69485 /* CalendarChartsView+Charts.swift */; };
@@ -37,7 +37,7 @@
 		EB8EA45F2BBF4E6400FD75A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB8EA45E2BBF4E6400FD75A7 /* Assets.xcassets */; };
 		EB8EA4622BBF4E6400FD75A7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB8EA4612BBF4E6400FD75A7 /* Preview Assets.xcassets */; };
 		FA0C62922BF418EE005563C9 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C62912BF418EE005563C9 /* TabsView.swift */; };
-		FA571F162BD848DF000F65DF /* CalendarChartStateOfMindData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA571F152BD848DF000F65DF /* CalendarChartStateOfMindData.swift */; };
+		FA571F162BD848DF000F65DF /* CalendarStateOfMindData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA571F152BD848DF000F65DF /* CalendarStateOfMindData.swift */; };
 		FA9F3D4D2BF6E02100E99825 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9F3D4C2BF6DF2500E99825 /* HealthStore.swift */; };
 		FAE2D04E2BCF116F00C4E04E /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2D04D2BCF115F00C4E04E /* CalendarModel.swift */; };
 		FAFC69CE2BFD6F6E003EA16E /* AuthorizationGatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFC69CD2BFD6D54003EA16E /* AuthorizationGatedView.swift */; };
@@ -66,7 +66,7 @@
 		EB2304502BF55AEF0045AE01 /* InsightCalendarScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightCalendarScoreView.swift; sourceTree = "<group>"; };
 		EB2E3F112BFD6408004943BB /* InsightsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsModels.swift; sourceTree = "<group>"; };
 		EB2E3F142BFD6490004943BB /* InsightSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSectionView.swift; sourceTree = "<group>"; };
-		EB2E3F172BFE46D2004943BB /* InsightsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDataSource.swift; sourceTree = "<group>"; };
+		EB2E3F172BFE46D2004943BB /* InsightsDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDataFetcher.swift; sourceTree = "<group>"; };
 		EB3DFFA72BE3FC6C00AC3A04 /* InsightsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsGridView.swift; sourceTree = "<group>"; };
 		EB3DFFDF2BE4122500AC3A04 /* InsightEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightEventView.swift; sourceTree = "<group>"; };
 		EB89E2EF2BE3FBAD00C69485 /* CalendarChartsView+CalendarSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarChartsView+CalendarSelectorView.swift"; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 		EB8EA4612BBF4E6400FD75A7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F2A1284C9946D244E0471C8B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.txt; sourceTree = "<group>"; };
 		FA0C62912BF418EE005563C9 /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
-		FA571F152BD848DF000F65DF /* CalendarChartStateOfMindData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarChartStateOfMindData.swift; sourceTree = "<group>"; };
+		FA571F152BD848DF000F65DF /* CalendarStateOfMindData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarStateOfMindData.swift; sourceTree = "<group>"; };
 		FA9F3D4C2BF6DF2500E99825 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		FAE2D04C2BCDE88600C4E04E /* HKStateOfMindDataSampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HKStateOfMindDataSampleApp.entitlements; sourceTree = "<group>"; };
 		FAE2D04D2BCF115F00C4E04E /* CalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
@@ -188,8 +188,8 @@
 			children = (
 				0A05A5032BDF1448004BFEF8 /* CalendarFetcher.swift */,
 				0F5BF3352BE9A1FD00FC8347 /* CalendarQualityScoreProvider.swift */,
-				FA571F152BD848DF000F65DF /* CalendarChartStateOfMindData.swift */,
-				EB2E3F172BFE46D2004943BB /* InsightsDataSource.swift */,
+				FA571F152BD848DF000F65DF /* CalendarStateOfMindData.swift */,
+				EB2E3F172BFE46D2004943BB /* InsightsDataFetcher.swift */,
 				0F5BF33A2BE9A24900FC8347 /* WorkLifeBalanceScoreProvider.swift */,
 			);
 			path = "Data Sources";
@@ -385,10 +385,10 @@
 				EB3DFFA82BE3FC6C00AC3A04 /* InsightsGridView.swift in Sources */,
 				0F5BF3402BE9A32000FC8347 /* WorkLifeBalanceScoreProvider.swift in Sources */,
 				EB2E3F152BFD6490004943BB /* InsightSectionView.swift in Sources */,
-				FA571F162BD848DF000F65DF /* CalendarChartStateOfMindData.swift in Sources */,
+				FA571F162BD848DF000F65DF /* CalendarStateOfMindData.swift in Sources */,
 				FA9F3D4D2BF6E02100E99825 /* HealthStore.swift in Sources */,
 				0A05A5022BDF141B004BFEF8 /* Calendars.swift in Sources */,
-				EB2E3F182BFE46D2004943BB /* InsightsDataSource.swift in Sources */,
+				EB2E3F182BFE46D2004943BB /* InsightsDataFetcher.swift in Sources */,
 				0A05A5042BDF1448004BFEF8 /* CalendarFetcher.swift in Sources */,
 				0F5BF33B2BE9A30800FC8347 /* EmojiType.swift in Sources */,
 				0F5BF3322BE9A19900FC8347 /* EventView.swift in Sources */,

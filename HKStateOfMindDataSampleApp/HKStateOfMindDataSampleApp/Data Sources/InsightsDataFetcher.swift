@@ -9,10 +9,10 @@ import Foundation
 import HealthKit
 
 struct InsightsDataFetcher {
-    
+
     var calendarFetcher: CalendarFetcher { CalendarFetcher.shared }
     var healthStore: HKHealthStore { HealthStore.shared.healthStore }
-    
+
     func event(
         matching label: HKStateOfMind.Label,
         calendarModels: [CalendarModel],
@@ -25,10 +25,10 @@ struct InsightsDataFetcher {
 
         // Sort samples by valence based on their label.
         stateOfMindSamples = sort(samples: stateOfMindSamples, with: label)
-        
+
         // Fetch events.
         let events = try await calendarFetcher.findEvents(within: dateInterval, in: calendarModels)
-        
+
         // Find any matching events for the sample collection and sort by the strongest feeling.
         for stateOfMindSample in stateOfMindSamples {
             if let event = findClosestEvent(to: stateOfMindSample, events: events) {
@@ -37,27 +37,38 @@ struct InsightsDataFetcher {
         }
         return nil
     }
-    
+
     func fetchStateOfMindSamples(matching label: HKStateOfMind.Label,
                                  calendarModels: [CalendarModel],
                                  dateInterval: DateInterval) async throws -> [HKStateOfMind] {
-        let dataSource = await CalendarChartStateOfMindDataProvider(
-            healthStore: healthStore,
-            selectedCalendars: Set(calendarModels),
-            dateInterval: dateInterval,
-            stateOfMindLabel: label
-        )
-        
         var samples: [HKStateOfMind] = []
         for calendar in calendarModels {
-            samples += try await dataSource.fetchStateOfMindSamples(
+            samples += try await fetchStateOfMindSamples(
                 label: label,
-                association: calendar.stateOfMindAssociation
+                association: calendar.stateOfMindAssociation,
+                dateInterval: dateInterval
             )
         }
         return samples
     }
-    
+
+    func fetchStateOfMindSamples(label: HKStateOfMind.Label,
+                                 association: HKStateOfMind.Association,
+                                 dateInterval: DateInterval) async throws -> [HKStateOfMind] {
+        // Configure the query.
+        let datePredicate = HKQuery.predicateForSamples(withStart: dateInterval.start, end: dateInterval.end)
+        let associationPredicate = HKQuery.predicateForStatesOfMind(with: association)
+        let labelPredicate = HKQuery.predicateForStatesOfMind(with: label)
+        let compoundPredicate = NSCompoundPredicate(
+            andPredicateWithSubpredicates: [datePredicate, associationPredicate, labelPredicate]
+        )
+
+        let stateOfMindPredicate = HKSamplePredicate.stateOfMind(compoundPredicate)
+        let descriptor = HKSampleQueryDescriptor(predicates: [stateOfMindPredicate], sortDescriptors: [])
+
+        return try await descriptor.result(for: healthStore)
+    }
+
     func findClosestEvent(to stateOfMindSample: HKStateOfMind, events: [EventModel]) -> EventModel? {
         let numberOfMinutesAfterEventEnd: Double = 30
         let validEvents = events.filter { event in
@@ -75,7 +86,7 @@ struct InsightsDataFetcher {
                 $1.endDate.timeIntervalSince(stateOfMindSample.startDate)
         }
     }
-    
+
     func sort(samples: [HKStateOfMind], with label: HKStateOfMind.Label) -> [HKStateOfMind] {
         var sortingMethod: (HKStateOfMind, HKStateOfMind) -> Bool
         switch label {
@@ -91,5 +102,5 @@ struct InsightsDataFetcher {
         }
         return samples.sorted(by: sortingMethod)
     }
-    
+
 }

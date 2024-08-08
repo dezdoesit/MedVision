@@ -35,9 +35,16 @@ struct TodayView: View {
             }
             .padding(.bottom)
             
-            ScrollView {
-                ForEach($eventList) { event in
-                    EventView(event: event)
+            if eventList.isEmpty {
+                Spacer()
+                Text("No Events Today")
+                    .font(.headline)
+                Spacer()
+            } else {
+                ScrollView {
+                    ForEach($eventList) { event in
+                        EventView(event: event)
+                    }
                 }
             }
         }
@@ -45,8 +52,10 @@ struct TodayView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    Task {
-                        await openImmersiveSpace(id: "reflectionSpace")
+                    if !eventList.isEmpty {
+                        Task {
+                            await openImmersiveSpace(id: "reflectionSpace")
+                        }
                     }
                 } label: {
                     Label("Reflect", systemImage: "figure.mind.and.body")
@@ -55,9 +64,6 @@ struct TodayView: View {
         }
 #endif
         .onAppear {
-            refreshData()
-        }
-        .onChange(of: calendars) {
             refreshData()
         }
     }

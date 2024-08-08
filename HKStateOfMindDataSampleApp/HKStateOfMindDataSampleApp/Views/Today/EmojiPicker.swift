@@ -20,8 +20,6 @@ struct EmojiPicker: View {
     
     @Environment(\.dismiss) var dismiss
     
-    var healthStore: HKHealthStore { HealthStore.shared.healthStore }
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -64,9 +62,12 @@ struct EmojiPicker: View {
         isLogged = true
         if let selectedEmoji {
             Task {
-                saveDetails = await healthStore.saveStateOfMindSample(event: event,
-                                                                      emoji: selectedEmoji,
-                                                                      didError: $showAlert)
+                do {
+                    try await HealthStore.shared.healthStore.saveStateOfMindSample(event: event, emoji: selectedEmoji)
+                } catch {
+                    saveDetails = EmojiType.SaveDetails(saveError: error)
+                    showAlert = true
+                }
                 dismiss()
             }
         }

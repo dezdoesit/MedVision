@@ -12,7 +12,6 @@ import SwiftUI
 struct InsightsGridView: View {
     
     let calendars: Calendars
-    var healthStore: HKHealthStore { HealthStore.shared.healthStore }
     private let dataFetcher = InsightsDataFetcher()
     
     let insightSections: [InsightSection] = [
@@ -125,6 +124,8 @@ struct InsightsGridView: View {
             from: calendars,
             numberOfDays: 7
         )
+        
+        let healthStore = HealthStore.shared.healthStore
         weeklyCalendarQualityScore = try await CalendarQualityScoreProvider.calendarQualityScore(
             forNumberOfDays: 7,
             associations: [.work],

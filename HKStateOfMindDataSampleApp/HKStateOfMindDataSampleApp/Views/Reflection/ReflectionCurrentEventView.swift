@@ -13,7 +13,6 @@ import EventKit
 
 struct ReflectionCurrentEventView: View {
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
-    var healthStore: HKHealthStore { HealthStore.shared.healthStore }
     private let calendars: Calendars
     
     @Binding var selectedEmoji: EmojiType?
@@ -60,9 +59,12 @@ struct ReflectionCurrentEventView: View {
                         Button("Save to HealthKit") {
                             guard let selectedEmoji else { return }
                             Task {
-                                self.saveDetails = await healthStore.saveStateOfMindSample(event: currentEvent,
-                                                                                           emoji: selectedEmoji,
-                                                                                           didError: $showAlert)
+                                do {
+                                    try await HealthStore.shared.healthStore.saveStateOfMindSample(event: currentEvent, emoji: selectedEmoji)
+                                } catch {
+                                    saveDetails = EmojiType.SaveDetails(saveError: error)
+                                    showAlert = true
+                                }
                                 await dismissImmersiveSpace()
                             }
                         }
