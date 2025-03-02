@@ -40,7 +40,8 @@ struct ReflectionCurrentEmojiPickerView: View {
     private struct OptionButton: View {
         let option: EmojiType
         @Binding var selectedEmoji: EmojiType?
-        
+        @State private var isShowingDoctorMessageView = false // Add a state variable to control the sheet
+
         var isSelected: Bool {
             if let selectedEmoji {
                 return selectedEmoji.id == option.id
@@ -48,10 +49,13 @@ struct ReflectionCurrentEmojiPickerView: View {
                 return false
             }
         }
-        
+
         var body: some View {
             Button {
                 selectedEmoji = option
+                if selectedEmoji == .sad || selectedEmoji == .angry { // Check if the selected emotion is negative
+                    isShowingDoctorMessageView = true // Present the sheet if a negative emotion is selected
+                }
             } label: {
                 Text(option.emoji)
                     .font(.system(size: 48))
@@ -67,6 +71,9 @@ struct ReflectionCurrentEmojiPickerView: View {
                     .strokeBorder(isSelected ? option.color : .clear, lineWidth: 4)
                     .frame(width: 80, height: 80)
             )
+            .sheet(isPresented: $isShowingDoctorMessageView) { // Add the sheet modifier here
+                DoctorMessageView()
+            }
         }
     }
 }

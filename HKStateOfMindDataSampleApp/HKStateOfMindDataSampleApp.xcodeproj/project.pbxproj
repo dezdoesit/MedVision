@@ -13,6 +13,7 @@
 		0A39634A2BE0455B004D475A /* ReflectionSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3963492BE0455B004D475A /* ReflectionSpaceView.swift */; };
 		0AC66BB62BDA19370071DEDB /* ReflectionCurrentEmojiPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC66BB52BDA19370071DEDB /* ReflectionCurrentEmojiPickerView.swift */; };
 		0D1B92B52D73B837008EDC25 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B92B42D73B832008EDC25 /* AppModel.swift */; };
+		0DC107CF2D74A6C60073F1D0 /* ContactDoctorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC107CE2D74A6BC0073F1D0 /* ContactDoctorView.swift */; };
 		0F5BF32A2BE9A13500FC8347 /* CalendarScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5BF3292BE9A13500FC8347 /* CalendarScoreView.swift */; };
 		0F5BF32C2BE9A15300FC8347 /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5BF32B2BE9A15300FC8347 /* EmojiButton.swift */; };
 		0F5BF32E2BE9A16800FC8347 /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5BF32D2BE9A16800FC8347 /* EmojiPicker.swift */; };
@@ -52,6 +53,7 @@
 		0A3963492BE0455B004D475A /* ReflectionSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionSpaceView.swift; sourceTree = "<group>"; };
 		0AC66BB52BDA19370071DEDB /* ReflectionCurrentEmojiPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionCurrentEmojiPickerView.swift; sourceTree = "<group>"; };
 		0D1B92B42D73B832008EDC25 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		0DC107CE2D74A6BC0073F1D0 /* ContactDoctorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDoctorView.swift; sourceTree = "<group>"; };
 		0DEC931E2D73B9F1000EABA1 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		0F5BF3292BE9A13500FC8347 /* CalendarScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScoreView.swift; sourceTree = "<group>"; };
 		0F5BF32B2BE9A15300FC8347 /* EmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiButton.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 		0A05A5062BDF14DB004BFEF8 /* Reflection */ = {
 			isa = PBXGroup;
 			children = (
+				0DC107CE2D74A6BC0073F1D0 /* ContactDoctorView.swift */,
 				0A0E50DE2BDACEF40079FF7F /* ReflectionCurrentEventView.swift */,
 				0AC66BB52BDA19370071DEDB /* ReflectionCurrentEmojiPickerView.swift */,
 				0A3963492BE0455B004D475A /* ReflectionSpaceView.swift */,
@@ -404,6 +407,7 @@
 				0A39634A2BE0455B004D475A /* ReflectionSpaceView.swift in Sources */,
 				EB2E3F122BFD6408004943BB /* InsightsModels.swift in Sources */,
 				EB2304512BF55AEF0045AE01 /* InsightCalendarScoreView.swift in Sources */,
+				0DC107CF2D74A6C60073F1D0 /* ContactDoctorView.swift in Sources */,
 				FA0C62922BF418EE005563C9 /* TabsView.swift in Sources */,
 				EB8EA45B2BBF4E6200FD75A7 /* HKStateOfMindDataSampleApp.swift in Sources */,
 				0F5BF3342BE9A1CA00FC8347 /* TodayView.swift in Sources */,
