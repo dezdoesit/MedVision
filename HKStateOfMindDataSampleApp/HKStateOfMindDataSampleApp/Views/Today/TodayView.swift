@@ -14,7 +14,7 @@ struct TodayView: View {
     
     let calendars: Calendars
     
-    @State private var score: Int = 0
+    @State private var score: Int = 78
     @State private var eventList: [EventModel] = []
     
 #if os(visionOS)
@@ -27,8 +27,8 @@ struct TodayView: View {
         VStack(alignment: .center) {
             // Today View's Score representation
             VStack(alignment: .center) {
-                CalendarScoreView(score: score)
-                Text("Work-Life Balance Score")
+                CalendarScoreView(score: 55)
+                Text("Health Score")
                     .bold()
                     .font(.title3)
                     .fontDesign(.rounded)
