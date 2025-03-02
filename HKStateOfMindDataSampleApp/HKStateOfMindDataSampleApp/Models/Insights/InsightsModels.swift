@@ -38,15 +38,15 @@ enum InsightType {
     var displayName: String {
         switch self {
         case .workLifeBalanceScore:
-            return "Work-Life Balance"
+            return "Health Score"
         case .calendarQualityScore:
             return "Calendar Quality"
         case .mostMeaningfulEvent:
-            return "Most Meaningful Event"
+            return "Most Impactful Trial"
         case .mostBoringEvent:
-            return "Most Boring Event"
+            return "Most Redundant Trial"
         case .proudestMoment:
-            return "Proudest Moment"
+            return "Best Results"
         }
     }
 }
