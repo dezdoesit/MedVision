@@ -12,4 +12,8 @@ struct AIResponse: Codable{
    let response: String
     
 }
+struct AIResponse2: Codable{
+   let response: String
+}
+
 

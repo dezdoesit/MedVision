@@ -112,41 +112,120 @@ struct InsightsDataFetcher {
         }
         return samples.sorted(by: sortingMethod)
     }
-
-    // New async function to fetch heart rate data and send it over a network endpoint
     func sendHeartRateDataToServer(for dateInterval: DateInterval, endpoint: URL) async throws {
-        let URL = URL(string: "https://medvisionuc.pythonanywhere.com")
-        // Fetch average heart rate data
-        if let averageHeartRate = try await fetchAverageHeartRate(for: dateInterval) {
-            print("Average Heart Rate: \(averageHeartRate)")
+            // Step 1: Send heart rate data to the first endpoint
+            let uploadEndpoint = URL(string: "https://ancient-math-56cb.shirtlesspenguin.workers.dev/GraphDataUpload")!
+            
+            // Fetch average heart rate data
+            if let averageHeartRate = try await fetchAverageHeartRate(for: dateInterval) {
+                print("Average Heart Rate: \(averageHeartRate)")
 
-            // Prepare data to send
-            let heartRateData: [String: Any] = [
-                "averageHeartRate": averageHeartRate,
-                "startDate": ISO8601DateFormatter().string(from: dateInterval.start),
-                "endDate": ISO8601DateFormatter().string(from: dateInterval.end)
-            ]
+                // Prepare data to send
+                let heartRateData: [String: Any] = [
+                    "averageHeartRate": averageHeartRate,
+                    "startDate": ISO8601DateFormatter().string(from: dateInterval.start),
+                    "endDate": ISO8601DateFormatter().string(from: dateInterval.end)
+                ]
 
-            // Convert to JSON
-            let jsonData = try JSONSerialization.data(withJSONObject: heartRateData, options: .prettyPrinted)
+                // Convert to JSON
+                let jsonData = try JSONSerialization.data(withJSONObject: heartRateData, options: .prettyPrinted)
 
-            // Create URLRequest
-            var request = URLRequest(url: endpoint)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = jsonData
+                // Create URLRequest
+                var request = URLRequest(url: uploadEndpoint)
+                request.httpMethod = "POST"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = jsonData
 
-            // Send the data to the server
-            let (data, response) = try await URLSession.shared.data(for: request)
+                // Send the data to the server
+                let (data, response) = try await URLSession.shared.data(for: request)
 
-            // Handle the response
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                print("Heart rate data sent successfully!")
+                // Handle the response from the first server
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    print("Heart rate data sent successfully!")
+
+                    // Step 2: Send data to /GraphSummary endpoint for AI response
+                    let summaryEndpoint = URL(string: "https://ancient-math-56cb.shirtlesspenguin.workers.dev/GraphSummary")!
+                    
+                    var summaryRequest = URLRequest(url: summaryEndpoint)
+                    summaryRequest.httpMethod = "POST"
+                    summaryRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                    summaryRequest.httpBody = data // Send the same data as in the first request to /GraphSummary
+
+                    // Get the AI response
+                    let (summaryData, summaryResponse) = try await URLSession.shared.data(for: summaryRequest)
+                    
+                    // Check if the response is valid and parse it
+                    if let httpResponse = summaryResponse as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                        let aiResponse = try JSONDecoder().decode(AIResponse2.self, from: summaryData)
+                        print("AI Response: \(aiResponse.response)")
+
+                        // Step 3: Send AI response to the final endpoint
+                        let postAIEndpoint = URL(string: "https://medvisionuc.pythonanywhere.com/PostAI")!
+                        
+                        var postAIRequest = URLRequest(url: postAIEndpoint)
+                        postAIRequest.httpMethod = "POST"
+                        postAIRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                        
+                        let aiResponseData: [String: Any] = [
+                            "response": aiResponse.response
+                        ]
+                        let aiResponseJsonData = try JSONSerialization.data(withJSONObject: aiResponseData, options: .prettyPrinted)
+                        postAIRequest.httpBody = aiResponseJsonData
+
+                        // Send the AI response to the final endpoint
+                        let (_, postAIResponse) = try await URLSession.shared.data(for: postAIRequest)
+
+                        // Handle the response
+                        if let httpResponse = postAIResponse as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                            print("AI response posted successfully!")
+                        } else {
+                            print("Failed to post AI response: \(String(describing: postAIResponse))")
+                        }
+                    } else {
+                        print("Failed to get AI response: \(String(describing: summaryResponse))")
+                    }
+                } else {
+                    print("Failed to send data to GraphDataUpload: \(String(describing: response))")
+                }
             } else {
-                print("Failed to send data: \(String(describing: response))")
+                print("No heart rate data available")
             }
-        } else {
-            print("No heart rate data available")
         }
-    }
+
 }
+// New async function to fetch heart rate data and send it over a network endpoint
+//    func sendHeartRateDataToServer(for dateInterval: DateInterval, endpoint: URL) async throws {
+//        let URL = URL(string: "https://medvisionuc.pythonanywhere.com")
+//        // Fetch average heart rate data
+//        if let averageHeartRate = try await fetchAverageHeartRate(for: dateInterval) {
+//            print("Average Heart Rate: \(averageHeartRate)")
+//
+//            // Prepare data to send
+//            let heartRateData: [String: Any] = [
+//                "averageHeartRate": averageHeartRate,
+//                "startDate": ISO8601DateFormatter().string(from: dateInterval.start),
+//                "endDate": ISO8601DateFormatter().string(from: dateInterval.end)
+//            ]
+//
+//            // Convert to JSON
+//            let jsonData = try JSONSerialization.data(withJSONObject: heartRateData, options: .prettyPrinted)
+//
+//            // Create URLRequest
+//            var request = URLRequest(url: endpoint)
+//            request.httpMethod = "POST"
+//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            request.httpBody = jsonData
+//
+//            // Send the data to the server
+//            let (data, response) = try await URLSession.shared.data(for: request)
+//
+//            // Handle the response
+//            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+//                print("Heart rate data sent successfully!")
+//            } else {
+//                print("Failed to send data: \(String(describing: response))")
+//            }
+//        } else {
+//            print("No heart rate data available")
+//        }
+//    }
