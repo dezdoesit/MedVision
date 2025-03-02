@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>&apos;HKStateOfMindDataSampleApp&apos; can access your calendar so you can log state of mind in association with calendar events.</string>
+	<string>'HKStateOfMindDataSampleApp' can access your calendar so you can log state of mind in association with calendar events.</string>
 </dict>
 </plist>

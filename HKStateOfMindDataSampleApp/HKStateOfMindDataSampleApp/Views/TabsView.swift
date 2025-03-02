@@ -15,6 +15,7 @@ struct TabsView: View {
         case today
         case charts
         case insights
+        case clinicalTrials
     }
     
     /// The tab to select on appear, if any.
@@ -30,17 +31,21 @@ struct TabsView: View {
     @Binding var toggleHealthDataAuthorization: Bool
     @Binding var healthDataAuthorized: Bool?
     
+    @ObservedObject var trial: ClinicalViewModel
+    
     init(initialSelection: TabKind,
          calendars: Binding<Calendars>,
          eventsAuthorized: Binding<Bool?>,
          toggleHealthDataAuthorization: Binding<Bool>,
-         healthDataAuthorized: Binding<Bool?>
+         healthDataAuthorized: Binding<Bool?>,
+         trial: ClinicalViewModel
     ) {
         self.initialTab = initialSelection
         self._calendars = calendars
         self._eventsAuthorized = eventsAuthorized
         self._toggleHealthDataAuthorization = toggleHealthDataAuthorization
         self._healthDataAuthorized = healthDataAuthorized
+        self.trial = trial
     }
     
     var body: some View {
@@ -53,6 +58,9 @@ struct TabsView: View {
             }
             Tab(.insightsViewDisplayTitle, systemImage: "lightbulb", value: TabKind.insights) {
                 insightsView()
+            }
+            Tab(.insightsViewDisplayTitle, systemImage: "stethoscope", value: TabKind.clinicalTrials) {
+                clinicalTrialsView()
             }
         }.onAppear {
             if let initialTab {
@@ -98,11 +106,20 @@ struct TabsView: View {
         }
     }
     
-}
+    @MainActor
+       @ViewBuilder
+       private func clinicalTrialsView() -> some View {
+           NavigationStack {
+               ContentView(Trial: trial)
+                   .navigationTitle(.trialDetailViewTitle)
+           }
+       }
+   }
 
 @MainActor
 extension LocalizedStringKey {
     static let todayViewDisplayTitle: LocalizedStringKey = "Today"
     static let chartsViewDisplayTitle: LocalizedStringKey = "Charts"
     static let insightsViewDisplayTitle: LocalizedStringKey = "Insights"
+    static let trialDetailViewTitle: LocalizedStringKey = "Clinical Trials"
 }

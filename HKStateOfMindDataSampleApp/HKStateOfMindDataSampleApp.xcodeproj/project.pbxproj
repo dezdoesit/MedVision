@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		0A0E50DF2BDACEF40079FF7F /* ReflectionCurrentEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0E50DE2BDACEF40079FF7F /* ReflectionCurrentEventView.swift */; };
 		0A39634A2BE0455B004D475A /* ReflectionSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3963492BE0455B004D475A /* ReflectionSpaceView.swift */; };
 		0AC66BB62BDA19370071DEDB /* ReflectionCurrentEmojiPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC66BB52BDA19370071DEDB /* ReflectionCurrentEmojiPickerView.swift */; };
+		0D1B92B52D73B837008EDC25 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B92B42D73B832008EDC25 /* AppModel.swift */; };
 		0F5BF32A2BE9A13500FC8347 /* CalendarScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5BF3292BE9A13500FC8347 /* CalendarScoreView.swift */; };
 		0F5BF32C2BE9A15300FC8347 /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5BF32B2BE9A15300FC8347 /* EmojiButton.swift */; };
 		0F5BF32E2BE9A16800FC8347 /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5BF32D2BE9A16800FC8347 /* EmojiPicker.swift */; };
@@ -50,6 +51,8 @@
 		0A0E50DE2BDACEF40079FF7F /* ReflectionCurrentEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionCurrentEventView.swift; sourceTree = "<group>"; };
 		0A3963492BE0455B004D475A /* ReflectionSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionSpaceView.swift; sourceTree = "<group>"; };
 		0AC66BB52BDA19370071DEDB /* ReflectionCurrentEmojiPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionCurrentEmojiPickerView.swift; sourceTree = "<group>"; };
+		0D1B92B42D73B832008EDC25 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		0DEC931E2D73B9F1000EABA1 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		0F5BF3292BE9A13500FC8347 /* CalendarScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScoreView.swift; sourceTree = "<group>"; };
 		0F5BF32B2BE9A15300FC8347 /* EmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiButton.swift; sourceTree = "<group>"; };
 		0F5BF32D2BE9A16800FC8347 /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
@@ -76,7 +79,7 @@
 		EB8EA45A2BBF4E6200FD75A7 /* HKStateOfMindDataSampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKStateOfMindDataSampleApp.swift; sourceTree = "<group>"; };
 		EB8EA45E2BBF4E6400FD75A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB8EA4612BBF4E6400FD75A7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F2A1284C9946D244E0471C8B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.txt; sourceTree = "<group>"; };
+		F2A1284C9946D244E0471C8B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		FA0C62912BF418EE005563C9 /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
 		FA571F152BD848DF000F65DF /* CalendarStateOfMindData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarStateOfMindData.swift; sourceTree = "<group>"; };
 		FA9F3D4C2BF6DF2500E99825 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
@@ -85,8 +88,15 @@
 		FAE2D0532BCF251C00C4E04E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAFC69CD2BFD6D54003EA16E /* AuthorizationGatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationGatedView.swift; sourceTree = "<group>"; };
 		FAFC69D02BFD753D003EA16E /* HKHealthStore+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKHealthStore+Extensions.swift"; sourceTree = "<group>"; };
-		FF980EB390C3A18ADF6C4027 /* SampleCode.xcconfig */ = {isa = PBXFileReference; name = SampleCode.xcconfig; path = ../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
+		FF980EB390C3A18ADF6C4027 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		0DB60A962D73B34100EA0A05 /* DataService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DataService; sourceTree = "<group>"; };
+		0DB60A9A2D73B37E00EA0A05 /* AI */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AI; sourceTree = "<group>"; };
+		0DB60AA12D73B3BA00EA0A05 /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
+		0DB60AA82D73B45900EA0A05 /* AIViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AIViews; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		EB8EA4542BBF4E6200FD75A7 /* Frameworks */ = {
@@ -116,6 +126,14 @@
 				0A3963492BE0455B004D475A /* ReflectionSpaceView.swift */,
 			);
 			path = Reflection;
+			sourceTree = "<group>";
+		};
+		0DEC931D2D73B9DE000EABA1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0DEC931E2D73B9F1000EABA1 /* RealityKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		0F5BF3272BE9A0F500FC8347 /* Today */ = {
@@ -223,6 +241,7 @@
 				EB8EA4582BBF4E6200FD75A7 /* Products */,
 				2E33AA2977345736B4B5D19B /* Configuration */,
 				134A4B9A65239392ADCACB9E /* LICENSE */,
+				0DEC931D2D73B9DE000EABA1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -237,12 +256,15 @@
 		EB8EA4592BBF4E6200FD75A7 /* HKStateOfMindDataSampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				0D1B92B42D73B832008EDC25 /* AppModel.swift */,
+				0DB60A962D73B34100EA0A05 /* DataService */,
 				EB8EA45A2BBF4E6200FD75A7 /* HKStateOfMindDataSampleApp.swift */,
 				EB2E3F102BFD625F004943BB /* Data Sources */,
 				FAE2D04F2BCF117600C4E04E /* Models */,
-				FAE2D0502BCF117F00C4E04E /* Views */,
 				FAE2D0582BCF60A400C4E04E /* Extensions */,
 				EB8EA4602BBF4E6400FD75A7 /* Preview Content */,
+				0DB60AA12D73B3BA00EA0A05 /* ViewModel */,
+				FAE2D0502BCF117F00C4E04E /* Views */,
 				EB2304522BF572850045AE01 /* Supporting Files */,
 			);
 			path = HKStateOfMindDataSampleApp;
@@ -269,6 +291,7 @@
 		FAE2D04F2BCF117600C4E04E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0DB60A9A2D73B37E00EA0A05 /* AI */,
 				0A05A5052BDF1499004BFEF8 /* Calendars */,
 				EB2E3F132BFD6410004943BB /* Insights */,
 				EB2E3F0D2BFD6214004943BB /* Stores */,
@@ -280,6 +303,7 @@
 		FAE2D0502BCF117F00C4E04E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0DB60AA82D73B45900EA0A05 /* AIViews */,
 				0F5BF3272BE9A0F500FC8347 /* Today */,
 				FA571F172BD89FA4000F65DF /* Charts */,
 				EB3DFFA92BE3FCB700AC3A04 /* Insights */,
@@ -313,6 +337,12 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				0DB60A962D73B34100EA0A05 /* DataService */,
+				0DB60A9A2D73B37E00EA0A05 /* AI */,
+				0DB60AA12D73B3BA00EA0A05 /* ViewModel */,
+				0DB60AA82D73B45900EA0A05 /* AIViews */,
 			);
 			name = HKStateOfMindDataSampleApp;
 			productName = HealthKitStateOfMindDataSampleApp;
@@ -400,6 +430,7 @@
 				EB89E2F22BE3FBAD00C69485 /* CalendarChartsView+Charts.swift in Sources */,
 				EB89E2F32BE3FBAD00C69485 /* CalendarChartsView.swift in Sources */,
 				EB89E2F42BE3FBAD00C69485 /* CalendarChartsView+CalendarSelectorView.swift in Sources */,
+				0D1B92B52D73B837008EDC25 /* AppModel.swift in Sources */,
 				0F5BF32E2BE9A16800FC8347 /* EmojiPicker.swift in Sources */,
 				EB23044F2BF558C10045AE01 /* InsightItemContainerView.swift in Sources */,
 				0F5BF33D2BE9A31300FC8347 /* CalendarQualityScoreProvider.swift in Sources */,
@@ -467,7 +498,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = xros;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos xros xrsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -528,7 +559,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = xros;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos xros xrsimulator";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -548,7 +579,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HKStateOfMindDataSampleApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZB5WA6672J;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -567,11 +598,14 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.HKStateOfMindDataSampleApp${SAMPLE_CODE_DISAMBIGUATOR}";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "com.example.apple-samplecode.HKStatOfMindDataSampleAppZB5WA6672J";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1, 2, 7";
+				TARGETED_DEVICE_FAMILY = " 2, 7,1,2";
 			};
 			name = Debug;
 		};
@@ -585,7 +619,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HKStateOfMindDataSampleApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZB5WA6672J;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -604,11 +638,14 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.HKStateOfMindDataSampleApp${SAMPLE_CODE_DISAMBIGUATOR}";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "com.example.apple-samplecode.HKStatOfMindDataSampleAppZB5WA6672J";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1, 2, 7";
+				TARGETED_DEVICE_FAMILY = " 2, 7,1,2";
 			};
 			name = Release;
 		};
