@@ -1,10 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-A data fetcher for app insights.
-*/
-
 import Foundation
 import HealthKit
 
@@ -55,9 +48,6 @@ struct InsightsDataFetcher {
         return nil
     }
     
-
-
-
     func fetchStateOfMindSamples(matching label: HKStateOfMind.Label,
                                  calendarModels: [CalendarModel],
                                  dateInterval: DateInterval) async throws -> [HKStateOfMind] {
@@ -123,4 +113,40 @@ struct InsightsDataFetcher {
         return samples.sorted(by: sortingMethod)
     }
 
+    // New async function to fetch heart rate data and send it over a network endpoint
+    func sendHeartRateDataToServer(for dateInterval: DateInterval, endpoint: URL) async throws {
+        let URL = URL(string: "https://medvisionuc.pythonanywhere.com")
+        // Fetch average heart rate data
+        if let averageHeartRate = try await fetchAverageHeartRate(for: dateInterval) {
+            print("Average Heart Rate: \(averageHeartRate)")
+
+            // Prepare data to send
+            let heartRateData: [String: Any] = [
+                "averageHeartRate": averageHeartRate,
+                "startDate": ISO8601DateFormatter().string(from: dateInterval.start),
+                "endDate": ISO8601DateFormatter().string(from: dateInterval.end)
+            ]
+
+            // Convert to JSON
+            let jsonData = try JSONSerialization.data(withJSONObject: heartRateData, options: .prettyPrinted)
+
+            // Create URLRequest
+            var request = URLRequest(url: endpoint)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = jsonData
+
+            // Send the data to the server
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            // Handle the response
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                print("Heart rate data sent successfully!")
+            } else {
+                print("Failed to send data: \(String(describing: response))")
+            }
+        } else {
+            print("No heart rate data available")
+        }
+    }
 }
