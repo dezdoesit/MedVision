@@ -16,6 +16,11 @@ extension CalendarChartsView {
         @Binding var dateConfiguration: DateConfiguration
         private let chartSeries: [ChartSeries]
         
+        @State private var avgHeartRate: Double?  // Add state for heart rate
+        
+        private let dataFetcher = InsightsDataFetcher()
+        var healthStore: HKHealthStore { HealthStore.shared.healthStore }
+        
         init(dateConfiguration: Binding<DateConfiguration>, chartSeries: [ChartSeries]) {
             self._dateConfiguration = dateConfiguration
             self.chartSeries = chartSeries
@@ -25,29 +30,39 @@ extension CalendarChartsView {
             VStack {
                 chartContent
                     .padding()
-                    .padding([.leading], 20) // Additional padding for leading because the view has no axis.
-#if os(visionOS)
+                    .padding([.leading], 20)
+    #if os(visionOS)
                     .background(.thickMaterial)
                     .cornerRadius(16)
-#else
+    #else
                     .background {
                         RoundedRectangle(cornerRadius: 16)
                             .fill(Color(uiColor: .quaternarySystemFill))
                     }
-#endif
+    #endif
                     .onGeometryChange(for: Int.self) { proxy in
-                        Int(proxy.size.width / 80) // 80 points per chart point.
+                        Int(proxy.size.width / 80)
                     } action: { newValue in
                         dateConfiguration.aggregationBinCount = newValue
                     }
                 DateIntervalPaginationView(dateConfiguration: $dateConfiguration)
                     .padding()
             }
+            .onAppear {
+                Task {
+                    do {
+                        avgHeartRate = try await dataFetcher.fetchAverageHeartRate(for: dateConfiguration.chartingDateInterval)
+                    } catch {
+                        print("Error fetching heart rate: \(error)")
+                    }
+                }
+            }
         }
         
         @ViewBuilder
         private var chartContent: some View {
             Chart {
+                // Existing State of Mind chart data
                 ForEach(chartSeries) { series in
                     if let chartPoints = series.chartPoints {
                         ForEach(chartPoints) { $0.ruleMark }
@@ -55,27 +70,33 @@ extension CalendarChartsView {
                             .foregroundStyle(Color(cgColor: series.calendar.color).gradient)
                     }
                 }
+
+                // New Heart Rate Overlay
+                if let avgHeartRate {
+                    RuleMark(y: .value("Heart Rate", avgHeartRate))
+                        .lineStyle(StrokeStyle(lineWidth: 2, dash: [5]))
+                        .foregroundStyle(.red)
+                        .annotation(position: .top, alignment: .center) {
+                            Text("Avg HR: \(Int(avgHeartRate)) BPM").foregroundStyle(.red)
+                        }
+                }
             }
             .frame(minWidth: 80)
-            .chartXScale(domain: [dateConfiguration.chartingDateInterval.start,
-                                  dateConfiguration.chartingDateInterval.end]) // Always show the dates for the data query.
-            .chartXAxis {
-                AxisMarks(values: .automatic(desiredCount: dateConfiguration.dateBins.count))
-            }
-            .chartYScale(range: .plotDimension(padding: 20))
+            .chartXScale(domain: [dateConfiguration.chartingDateInterval.start, dateConfiguration.chartingDateInterval.end])
             .chartYAxis {
                 AxisMarks(values: EmojiType.allCases) { emoji in
                     AxisValueLabel(horizontalSpacing: 20) {
                         let emojiType = emoji.as(EmojiType.self)!
-                        Text(emojiType.emoji)
-                            .font(.title)
+                        Text(emojiType.emoji).font(.title)
                     }
                 }
+                AxisMarks(position: .trailing) {
+                    AxisValueLabel { Text("Heart Rate (BPM)").foregroundColor(.red) }
+                }
             }
-            .contentTransition(.interpolate)
-            .animation(.default, value: chartSeries)
         }
     }
+
     
     /// A view that displays the date intervals with options to increment or decrement the date interval.
     private struct DateIntervalPaginationView: View {

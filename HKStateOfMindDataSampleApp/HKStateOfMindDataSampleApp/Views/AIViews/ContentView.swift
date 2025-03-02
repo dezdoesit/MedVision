@@ -1,11 +1,3 @@
-//
-//  ContentView.swift
-//  HKStateOfMindDataSampleApp
-//
-//  Created by Dezmond Blair on 3/1/25.
-//  Copyright © 2025 Apple. All rights reserved.
-//
-
 import SwiftUI
 import RealityKit
 
@@ -21,23 +13,36 @@ struct ContentView: View {
     ]
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            // Title at the top
+            Text("Available Clinical Trials")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.top)
+                .padding(.leading)
+            
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(Trial.trialslist, id: \.self.protocolSection.identificationModule.nctId) { trial in
-                        Circle()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.blue)
-                            .overlay(
-                                Text("T")
-                                    .foregroundColor(.white)
-                                    .font(.caption)
-                            )
-                            .padding()
-                            .onTapGesture {
-                                fillData(trial: trial)
-                                openWindow(id: "DetailView")
-                            }
+                    ForEach(Trial.trialslist.indices, id: \.self) { index in
+                        let trial = Trial.trialslist[index]
+                        VStack {
+                            // Display Trial number inside the button
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.blue)
+                                .frame(height: 100)
+                                .overlay(
+                                    Text("Trial \(index + 1)")
+                                        .foregroundColor(.white)
+                                        .font(.title2)
+                                        .bold()
+                                )
+                                .padding()
+                                .onTapGesture {
+                                    fillData(trial: trial)
+                                    openWindow(id: "DetailView")
+                                }
+                        }
+                        .padding(.horizontal)
                     }
                 }
                 .padding(.top, 10)
@@ -46,7 +51,8 @@ struct ContentView: View {
         }
         .padding()
     }
-    func fillData(trial: Study){
+
+    func fillData(trial: Study) {
         detailVM.description =
             trial.protocolSection.descriptionModule.detailedDescription ?? "No Description"
         detailVM.contactName = trial.protocolSection.contactsLocationsModule.centralContacts?[0].name ?? "No Name"

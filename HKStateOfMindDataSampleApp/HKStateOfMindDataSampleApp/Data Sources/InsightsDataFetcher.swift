@@ -13,6 +13,23 @@ struct InsightsDataFetcher {
     var calendarFetcher: CalendarFetcher { CalendarFetcher.shared }
     var healthStore: HKHealthStore { HealthStore.shared.healthStore }
 
+    func fetchAverageHeartRate(for dateInterval: DateInterval) async throws -> Double? {
+        let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        let datePredicate = HKQuery.predicateForSamples(withStart: dateInterval.start, end: dateInterval.end)
+        let heartRatePredicate = HKSamplePredicate.quantitySample(type: heartRateType, predicate: datePredicate)
+        
+        let descriptor = HKSampleQueryDescriptor(predicates: [heartRatePredicate], sortDescriptors: [])
+        
+        let samples = try await descriptor.result(for: healthStore)
+        let heartRates = samples.compactMap { sample -> Double? in
+            let quantity = (sample as? HKQuantitySample)?.quantity
+            return quantity?.doubleValue(for: HKUnit(from: "count/min"))
+        }
+        
+        guard !heartRates.isEmpty else { return nil }
+        return heartRates.reduce(0, +) / Double(heartRates.count)
+    }
+    
     func event(
         matching label: HKStateOfMind.Label,
         calendarModels: [CalendarModel],
@@ -37,6 +54,9 @@ struct InsightsDataFetcher {
         }
         return nil
     }
+    
+
+
 
     func fetchStateOfMindSamples(matching label: HKStateOfMind.Label,
                                  calendarModels: [CalendarModel],

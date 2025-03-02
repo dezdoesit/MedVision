@@ -144,4 +144,5 @@ struct InsightsGridView: View {
                                                     dateInterval: .eventHighlightInterval)
     }
     
+    
 }
